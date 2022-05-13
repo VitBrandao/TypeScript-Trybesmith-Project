@@ -5,6 +5,7 @@ const app = express();
 export const router = Router();
 
 app.use(express.json());
+app.use(router);
 
 const productsController = new ProductsController();
 
