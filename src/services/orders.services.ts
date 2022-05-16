@@ -1,6 +1,5 @@
 import OrderModel from '../models/orders.models';
 import connection from '../models/connection';
-// import IOrder from '../interfaces/order.interface';
 
 class OrderServices {
   public model: OrderModel;

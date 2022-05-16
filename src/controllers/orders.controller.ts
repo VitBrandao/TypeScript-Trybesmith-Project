@@ -7,7 +7,7 @@ class OrderController {
 
   public getAll = async (_req: Request, res: Response) => {
     const orders = await this.orderServices.getAll();
-    return res.status(StatusCodes.CREATED).json(orders);
+    return res.status(StatusCodes.OK).json(orders);
   };
 }
 
