@@ -21,7 +21,7 @@ class ProductModel {
       [name, amount],
     );
 
-    return { id: result.insertId, name, amount, orderId: 1 };
+    return { id: result.insertId, name, amount };
   }
 }
 

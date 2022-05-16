@@ -1,63 +1,32 @@
 import { NextFunction, Request, Response } from 'express';
-import Product from '../interfaces/product.interface';
+import { StatusCodes } from 'http-status-codes';
 
-type Message = {
-  message: string;
-};
+export function nameValidation(req: Request, res: Response, next: NextFunction) {
+  const { name } = req.body;
+  if (!name) return res.status(StatusCodes.BAD_REQUEST).json({ message: '"name" is required' });
 
-function doesNameExists(name: string) {
-  if (!name || name.length === 0 || name === undefined) return { message: '"name" is required' };
-}
-
-function validateName(name: string) {
-  const notValid = doesNameExists(name);
-  if (notValid?.message) return notValid;
-
-  if (typeof name !== 'string') return { message: '"name" must be a string' };
-
-  if (name.length < 3) return { message: '"name" length must be at least 3 characters long' };
-}
-
-function doesAmountExists(amount:string) {
-  if (!amount || amount.length === 0 || amount === undefined) {
-    return { message: '"amount" is required' };
-  }
-}
-
-function validateAmount(amount:string) {
-  const notValid = doesAmountExists(amount);
-  if (notValid?.message) return notValid;
-
-  if (typeof amount !== 'string') return { message: '"amount" must be a string' };
-
-  if (amount.length < 3) return { message: '"amount" length must be at least 3 characters long' };
-}
-
-function errorMessageCode(errorMessage: Message) {
-  if (errorMessage.message.includes('required')) {
-    return 400;
-  }
-  return 422;
-}
-
-function validateProduct(req: Request, res: Response, next: NextFunction) {
-  const product: Product = req.body;
-
-  const { name, amount } = product;
-
-  const nameValidation = validateName(name);
-  if (nameValidation?.message) {
-    const errorCode = errorMessageCode(nameValidation);
-    return res.send(errorCode).json(nameValidation);
+  if (typeof name !== 'string') {
+    return res.status(422).json({ message: '"name" must be a string' });
   }
 
-  const amountValidation = validateAmount(amount);
-  if (amountValidation?.message) {
-    const errorCode = errorMessageCode(amountValidation); 
-    return res.send(errorCode).json(amountValidation);
+  if (name.length < 3) {
+    return res.status(422).json({ message: '"name" length must be at least 3 characters long' });
   }
 
   next();
 }
 
-export default validateProduct;
+export function amountValidation(req: Request, res: Response, next: NextFunction) {
+  const { amount } = req.body;
+  if (!amount) return res.status(StatusCodes.BAD_REQUEST).json({ message: '"amount" is required' });
+
+  if (typeof amount !== 'string') {
+    return res.status(422).json({ message: '"amount" must be a string' });
+  }  
+
+  if (amount.length < 3) {
+    return res.status(422).json({ message: '"amount" length must be at least 3 characters long' });
+  }
+
+  next();
+}
