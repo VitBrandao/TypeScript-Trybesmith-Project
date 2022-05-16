@@ -1,6 +1,5 @@
 import UserModel from '../models/users.model';
 import connection from '../models/connection';
-import IUser from '../interfaces/user.interface';
 
 class UserServices {
   public model: UserModel;
@@ -14,7 +13,7 @@ class UserServices {
     classe: string, 
     level: number, 
     password: string,
-  ): Promise<IUser> {
+  ): Promise<string> {
     return this.model.create(username, classe, level, password);
   }
 }

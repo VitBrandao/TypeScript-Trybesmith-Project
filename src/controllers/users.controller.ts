@@ -8,7 +8,7 @@ class UserController {
   public create = async (req: Request, res: Response) => {
     const { username, classe, level, password } = req.body;
     const newUser = await this.userServices.create(username, classe, level, password);
-    res.status(StatusCodes.CREATED).json(newUser);
+    res.status(StatusCodes.CREATED).json({ token: newUser });
   };
 }
 
