@@ -12,5 +12,6 @@ const productsController = new ProductsController();
 
 router.get('/products', productsController.getAll);
 router.post('/products', nameValidation, amountValidation, productsController.create);
+router.post('/users');
 
 export default app;
